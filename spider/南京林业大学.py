@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 
 import urllib
-import io
+import json
 from lxml import etree
 
 import sys
@@ -12,13 +12,8 @@ sys.setdefaultencoding('utf-8')
 if __name__ == '__main__':
     url = 'https://lqcx.njfu.edu.cn/page/score-overyear.html'
 
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36'
-    }
-
     opener = urllib.URLopener()
-    opener.addheader('User-Agent',
-                     'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36')
+    opener.addheader('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36')
 
     resp = opener.open(url)
     content = resp.read()
@@ -34,9 +29,16 @@ if __name__ == '__main__':
             params = urllib.urlencode(params)
             resp = opener.open(url + params)
             content = resp.read()
-            tree = etree.HTML(content)
-            lines = tree.xpath('//div[@id="contentInfoId"]/ul')
-            for idx in range(len(lines)):
-                items = etree.ElementTree(lines[idx])
-                line = ','.join(str(i) for i in items.xpath('//li/text()'))
-                print line
+            payload = json.loads(content)
+            if payload['code'] == 1:
+                continue
+            for line in payload['data']:
+                print line['majorName'] \
+                    + line['kind'] \
+                    + line['maxScore'] \
+                    + line['minScore'] \
+                    + line['batch'] \
+                    + str(line['provinceScore']) \
+                    + line['year'] \
+                    + str(line['provinceName'])
+

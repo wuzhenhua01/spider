@@ -1,2 +1,6 @@
+-i  https://mirrors.aliyun.com/pypi/simple/
 lxml==3.8.0
 jsonpath==0.82.2
+pymongo==3.10.1
+pypandoc=1.7.5
+pyspark==2.3.0
