@@ -1,10 +1,13 @@
--i  https://mirrors.aliyun.com/pypi/simple/
+-i https://mirrors.aliyun.com/pypi/simple/
+-i http://localhost:3141/root/pypi/+simple/
 lxml==3.8.0
 jsonpath==0.82.2
 pymongo==3.10.1
 pypandoc=1.7.5
-pyspark==2.3.0
+pyspark==2.4.4
 branca==0.3.1
 folium==0.8.3
 scrapy==1.8.4
 selenium==3.141.0
+pandas==0.14.1
+matplotlib==2.2.5

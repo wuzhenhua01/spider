@@ -24,8 +24,7 @@ def main():
         'hoodie.datasource.hive_sync.jdbcurl': 'jdbc:hive2://10.37.69.1:2181/lbs;serviceDiscoveryMode=zooKeeper;zooKeeperNamespace=hiveserver2_zk;principal=hive/_HOST@HADOOP.CHINATELECOM.CN'
     }
 
-    inserts_df = spark.read.orc(
-        'hdfs://nma07-302-h12-sev-r4900-2u39:8020/domain/ns3/wznlxt_yx/dwm_db.db/dwm_lbs_evt_position_compress_hour/day_id=20240717/hour_id=00'). \
+    inserts_df = spark.read.orc('hdfs://nma07-302-h12-sev-r4900-2u39:8020/domain/ns3/wznlxt_yx/dwm_db.db/dwm_lbs_evt_position_compress_hour/day_id=20240717/hour_id=00'). \
         withColumn('day_id', lit('20240717')). \
         withColumn('hour_id', lit('00'))
     inserts_df.write.format('hudi'). \
